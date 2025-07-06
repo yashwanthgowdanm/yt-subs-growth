@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscriber Growth Calculator</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 p-4">
+    <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md transform transition-all duration-300 hover:scale-105">
+        <h1 class="text-4xl font-extrabold text-center mb-6 text-gray-900">
+            Subscriber Count
+        </h1>
+        <!-- Catchy content added here -->
+        <p class="text-center text-purple-700 mb-4 text-xl font-semibold">
+            Unlock the future of your channel!
+        </p>
+        <p class="text-center text-gray-600 mb-8 text-lg">
+            Let's calculate your future subscriber count!
+        </p>
+
+        <!-- Section for calculating Growth Rate -->
+        <div class="mb-8 border-t border-b border-gray-200 py-6 px-4 rounded-lg bg-gray-50">
+            <h2 class="text-2xl font-bold text-center mb-4 text-gray-800">
+                Calculate Your Growth Rate
+            </h2>
+            <div class="mb-4">
+                <label for="previousSubs" class="block text-gray-700 text-sm font-semibold mb-2">
+                    Previous Subscriber Count:
+                </label>
+                <input
+                    type="number"
+                    id="previousSubs"
+                    class="shadow-sm appearance-none border border-gray-300 rounded-lg w-full py-2 px-4 text-gray-800 leading-tight focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 ease-in-out"
+                    placeholder="e.g., 800"
+                    min="0"
+                >
+            </div>
+            <div class="mb-6">
+                <label for="daysBetween" class="block text-gray-700 text-sm font-semibold mb-2">
+                    Days since previous count:
+                </label>
+                <input
+                    type="number"
+                    id="daysBetween"
+                    class="shadow-sm appearance-none border border-gray-300 rounded-lg w-full py-2 px-4 text-gray-800 leading-tight focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 ease-in-out"
+                    placeholder="e.g., 30"
+                    min="1"
+                >
+            </div>
+            <button
+                id="calculateRateBtn"
+                class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-75 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"
+            >
+                Calculate Growth Rate
+            </button>
+            <div id="rateResult" class="mt-4 p-3 bg-purple-50 rounded-lg text-center text-purple-800 text-md font-bold border border-purple-200 hidden">
+                <!-- Calculated rate will be displayed here -->
+            </div>
+            <div id="rateErrorMessage" class="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg hidden" role="alert">
+                <!-- Error messages for rate calculation will be displayed here -->
+            </div>
+        </div>
+
+        <!-- Section for projecting Future Subscribers -->
+        <div class="mb-5">
+            <label for="initialSubs" class="block text-gray-700 text-sm font-semibold mb-2">
+                Current Subscriber Count:
+            </label>
+            <input
+                type="number"
+                id="initialSubs"
+                class="shadow-sm appearance-none border border-gray-300 rounded-lg w-full py-2 px-4 text-gray-800 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out"
+                placeholder="e.g., 1000"
+                min="0"
+            >
+        </div>
+
+        <div class="mb-5">
+            <label for="growthRate" class="block text-gray-700 text-sm font-semibold mb-2">
+                Enter the growth rate (as a percentage, e.g., 10 for 10%):
+            </label>
+            <input
+                type="number"
+                id="growthRate"
+                class="shadow-sm appearance-none border border-gray-300 rounded-lg w-full py-2 px-4 text-gray-800 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out"
+                placeholder="e.g., 5"
+                min="0"
+                step="0.01"
+            >
+        </div>
+
+        <div class="mb-8">
+            <label for="timeDuration" class="block text-gray-700 text-sm font-semibold mb-2">
+                Enter the time interval in days:
+            </label>
+            <input
+                type="number"
+                id="timeDuration"
+                class="shadow-sm appearance-none border border-gray-300 rounded-lg w-full py-2 px-4 text-gray-800 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out"
+                placeholder="e.g., 30"
+                min="0"
+            >
+        </div>
+
+        <button
+            id="calculateBtn"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"
+        >
+            Calculate Future Subscriber Count
+        </button>
+
+        <div id="result" class="mt-8 p-4 bg-blue-50 rounded-lg text-center text-blue-800 text-xl font-bold border border-blue-200 hidden">
+            <!-- Result will be displayed here -->
+        </div>
+
+        <div id="errorMessage" class="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg hidden" role="alert">
+            <!-- Error messages for future count calculation will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        // Function to calculate subscriber growth, similar to your Java code's calculateSubs
+        function calculateSubs(initialSubs, growthRate, timeDuration) {
+            // Convert growth rate from percentage to decimal (e.g., 5% becomes 0.05)
+            const rate = growthRate / 100;
+            return Math.floor(initialSubs * Math.pow((1 + rate), timeDuration));
+        }
+
+        // Function to calculate daily growth rate
+        function calculateGrowthRate(previousSubs, currentSubs, daysBetween) {
+            if (previousSubs === 0) {
+                // Handle case where previous subscribers were zero to avoid division by zero or log(0)
+                return 0; // Or indicate an infinite growth rate, depending on desired behavior
+            }
+            // Formula: (currentSubs / previousSubs)^(1 / daysBetween) - 1
+            const dailyRate = Math.pow((currentSubs / previousSubs), (1 / daysBetween)) - 1;
+            return dailyRate * 100; // Return as percentage
+        }
+
+        // Get references to HTML elements
+        const previousSubsInput = document.getElementById('previousSubs');
+        const daysBetweenInput = document.getElementById('daysBetween');
+        const calculateRateButton = document.getElementById('calculateRateBtn');
+        const rateResultDiv = document.getElementById('rateResult');
+        const rateErrorMessageDiv = document.getElementById('rateErrorMessage');
+
+        const initialSubsInput = document.getElementById('initialSubs');
+        const growthRateInput = document.getElementById('growthRate');
+        const timeDurationInput = document.getElementById('timeDuration');
+        const calculateButton = document.getElementById('calculateBtn');
+        const resultDiv = document.getElementById('result');
+        const errorMessageDiv = document.getElementById('errorMessage');
+
+        // Event listener for calculating growth rate
+        calculateRateButton.addEventListener('click', () => {
+            // Clear previous messages
+            rateResultDiv.classList.add('hidden');
+            rateErrorMessageDiv.classList.add('hidden');
+            rateErrorMessageDiv.textContent = '';
+            resultDiv.classList.add('hidden'); // Also clear the main result
+
+            const previousSubs = parseInt(previousSubsInput.value);
+            const currentSubs = parseInt(initialSubsInput.value); // Use the 'Current Subscriber Count' field
+            const daysBetween = parseInt(daysBetweenInput.value);
+
+            // Input validation for growth rate calculation
+            if (isNaN(previousSubs) || previousSubs < 0) {
+                rateErrorMessageDiv.textContent = 'Please enter a valid non-negative number for previous subscribers.';
+                rateErrorMessageDiv.classList.remove('hidden');
+                return;
+            }
+            if (isNaN(currentSubs) || currentSubs < 0) {
+                rateErrorMessageDiv.textContent = 'Please enter a valid non-negative number for current subscribers.';
+                rateErrorMessageDiv.classList.remove('hidden');
+                return;
+            }
+            if (isNaN(daysBetween) || daysBetween <= 0) {
+                rateErrorMessageDiv.textContent = 'Please enter a valid positive number for days between counts.';
+                rateErrorMessageDiv.classList.remove('hidden');
+                return;
+            }
+            if (currentSubs < previousSubs) {
+                rateErrorMessageDiv.textContent = 'Current subscribers should not be less than previous subscribers for positive growth calculation.';
+                rateErrorMessageDiv.classList.remove('hidden');
+                return;
+            }
+
+            const calculatedRate = calculateGrowthRate(previousSubs, currentSubs, daysBetween);
+
+            if (!isFinite(calculatedRate)) { // Check for infinite or NaN results
+                rateErrorMessageDiv.textContent = 'Cannot calculate growth rate. Check your inputs (e.g., previous subscribers cannot be zero if current is positive).';
+                rateErrorMessageDiv.classList.remove('hidden');
+                return;
+            }
+
+            // Display the calculated rate
+            rateResultDiv.textContent = `Calculated Daily Growth Rate: ${calculatedRate.toFixed(4)}%`;
+            rateResultDiv.classList.remove('hidden');
+
+            // Automatically populate the growth rate input and trigger the future count calculation
+            growthRateInput.value = calculatedRate.toFixed(4); // Populate with 4 decimal places for precision
+            calculateButton.click(); // Programmatically click the main calculate button
+        });
+
+        // Add event listener to the main calculate button (existing logic)
+        calculateButton.addEventListener('click', () => {
+            // Clear previous messages
+            resultDiv.classList.add('hidden');
+            errorMessageDiv.classList.add('hidden');
+            errorMessageDiv.textContent = '';
+
+            // Get values from input fields
+            const initialSubs = parseInt(initialSubsInput.value);
+            const growthRate = parseFloat(growthRateInput.value);
+            const timeDuration = parseInt(timeDurationInput.value);
+
+            // Input validation
+            if (isNaN(initialSubs) || initialSubs < 0) {
+                errorMessageDiv.textContent = 'Please enter a valid non-negative number for current subscribers.';
+                errorMessageDiv.classList.remove('hidden');
+                return;
+            }
+            if (isNaN(growthRate) || growthRate < 0) {
+                errorMessageDiv.textContent = 'Please enter a valid non-negative number for growth rate.';
+                errorMessageDiv.classList.remove('hidden');
+                return;
+            }
+            if (isNaN(timeDuration) || timeDuration < 0) {
+                errorMessageDiv.textContent = 'Please enter a valid non-negative number for time duration.';
+                errorMessageDiv.classList.remove('hidden');
+                return;
+            }
+
+            // Perform the calculation
+            const projectedSubs = calculateSubs(initialSubs, growthRate, timeDuration);
+
+            // Display the result
+            resultDiv.textContent = `The subscriber count will become: ${projectedSubs.toLocaleString()} subscribers!`;
+            resultDiv.classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>
