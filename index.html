@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Subscriber Growth Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="app.js" defer></script>
+</head>
+<body class="text-slate-800">
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+            <h1 class="text-3xl font-bold leading-tight text-slate-900">YouTube Subscriber Growth Dashboard</h1>
+        </div>
+    </header>
+
+    <main class="py-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
+            <!-- Projection Dashboard Section -->
+            <section id="dashboard" class="bg-white overflow-hidden shadow rounded-lg p-6 mb-8">
+                <h2 class="text-2xl font-bold text-slate-900 mb-1">Projection Dashboard</h2>
+                <p class="text-slate-600 mb-6">
+                    Use the inputs below to model future subscriber growth. The chart updates instantly based on the duration.
+                </p>
+
+                <!-- Stat Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
+                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
+                        <label for="initialSubs" class="block text-sm font-medium text-slate-500">Current Subscribers</label>
+                        <input type="number" id="initialSubs" value="1000" class="mt-1 text-3xl font-semibold text-slate-900 bg-transparent w-full focus:outline-none">
+                    </div>
+                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
+                        <label for="growthRate" class="block text-sm font-medium text-slate-500">Daily Growth Rate (%)</label>
+                        <input type="number" id="growthRate" value="0.5" step="0.01" class="mt-1 text-3xl font-semibold text-slate-900 bg-transparent w-full focus:outline-none">
+                    </div>
+                    <div class="bg-blue-50 p-5 rounded-lg border border-blue-200">
+                        <p class="block text-sm font-medium text-blue-600">Projected in <span id="durationDisplay">90</span> Days</p>
+                        <p id="projectedSubs" class="mt-1 text-3xl font-semibold text-blue-800">1,568</p>
+                    </div>
+                </div>
+
+                <!-- Time Duration Slider -->
+                <div class="mb-6">
+                    <label for="timeDuration" class="block text-sm font-medium text-slate-700 mb-2">Projection Duration (Days): <span id="durationValue" class="font-bold text-blue-600">90</span></label>
+                    <input id="timeDuration" type="range" min="1" max="365" value="90" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+                </div>
+
+                <!-- Chart -->
+                <div class="chart-container">
+                    <canvas id="growthChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Growth Rate Calculator Section -->
+            <section id="rate-calculator" class="bg-white overflow-hidden shadow rounded-lg p-6 mb-8">
+                <h2 class="text-2xl font-bold text-slate-900 mb-1">Growth Rate Calculator</h2>
+                <p class="text-slate-600 mb-6">
+                    Enter a previous subscriber count and the number of days since to estimate your daily growth rate.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label for="previousSubs" class="block text-sm font-medium text-slate-700">Previous Subscriber Count</label>
+                        <input type="number" id="previousSubs" placeholder="e.g., 850" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2">
+                    </div>
+                    <div>
+                        <label for="daysBetween" class="block text-sm font-medium text-slate-700">Days Since Previous Count</label>
+                        <input type="number" id="daysBetween" placeholder="e.g., 30" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2">
+                    </div>
+                    <div class="flex items-end">
+                        <button id="calculateRateBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition">
+                            Calculate & Apply Rate
+                        </button>
+                    </div>
+                </div>
+                <div id="rateErrorMessage" class="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg hidden" role="alert"></div>
+            </section>
+
+            <!-- Analysis Section -->
+            <section id="analysis" class="bg-white overflow-hidden shadow rounded-lg p-6">
+                <h2 class="text-2xl font-bold text-slate-900 mb-1">Growth Analysis</h2>
+                <p class="text-slate-600 mb-4">
+                    A brief interpretation of your projected growth rate.
+                </p>
+                <div id="analysisResult" class="bg-slate-50 p-5 rounded-lg border border-slate-200">
+                    <p class="text-lg text-slate-800"></p>
+                </div>
+            </section>
+
+        </div>
+    </main>
+</body>
+</html>
