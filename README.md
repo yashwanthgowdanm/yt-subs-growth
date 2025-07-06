@@ -31,4 +31,9 @@ A visually interactive, web-based dashboard that models future subscriber growth
 ---
 
 ## 📁 Project Structure
-
+   subscriber-growth-dashboard/
+    │
+    ├── index.html # Main HTML page
+    ├── style.css # Custom styles (in addition to Tailwind)
+    ├── app.js # JavaScript logic for interactivity
+    └── README.md # Project overview and usage instructions
