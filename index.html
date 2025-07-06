@@ -21,6 +21,29 @@
 
     <main class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <!-- Growth Rate Calculator Section -->
+            <section id="rate-calculator" class="bg-white overflow-hidden shadow rounded-lg p-6 mb-8">
+                <h2 class="text-2xl font-bold text-slate-900 mb-1">Growth Rate Calculator</h2>
+                <p class="text-slate-600 mb-6">
+                    Enter a previous subscriber count and the number of days since to estimate your daily growth rate.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label for="previousSubs" class="block text-sm font-medium text-slate-700">Previous Subscriber Count</label>
+                        <input type="number" id="previousSubs" placeholder="e.g., 850" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2">
+                    </div>
+                    <div>
+                        <label for="daysBetween" class="block text-sm font-medium text-slate-700">Days Since Previous Count</label>
+                        <input type="number" id="daysBetween" placeholder="e.g., 30" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2">
+                    </div>
+                    <div class="flex items-end">
+                        <button id="calculateRateBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition">
+                            Calculate & Apply Rate
+                        </button>
+                    </div>
+                </div>
+                <div id="rateErrorMessage" class="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg hidden" role="alert"></div>
+            </section>
 
             <!-- Projection Dashboard Section -->
             <section id="dashboard" class="bg-white overflow-hidden shadow rounded-lg p-6 mb-8">
@@ -55,30 +78,6 @@
                 <div class="chart-container">
                     <canvas id="growthChart"></canvas>
                 </div>
-            </section>
-
-            <!-- Growth Rate Calculator Section -->
-            <section id="rate-calculator" class="bg-white overflow-hidden shadow rounded-lg p-6 mb-8">
-                <h2 class="text-2xl font-bold text-slate-900 mb-1">Growth Rate Calculator</h2>
-                <p class="text-slate-600 mb-6">
-                    Enter a previous subscriber count and the number of days since to estimate your daily growth rate.
-                </p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div>
-                        <label for="previousSubs" class="block text-sm font-medium text-slate-700">Previous Subscriber Count</label>
-                        <input type="number" id="previousSubs" placeholder="e.g., 850" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2">
-                    </div>
-                    <div>
-                        <label for="daysBetween" class="block text-sm font-medium text-slate-700">Days Since Previous Count</label>
-                        <input type="number" id="daysBetween" placeholder="e.g., 30" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2">
-                    </div>
-                    <div class="flex items-end">
-                        <button id="calculateRateBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition">
-                            Calculate & Apply Rate
-                        </button>
-                    </div>
-                </div>
-                <div id="rateErrorMessage" class="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg hidden" role="alert"></div>
             </section>
 
             <!-- Analysis Section -->
