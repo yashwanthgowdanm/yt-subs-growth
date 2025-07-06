@@ -6,7 +6,7 @@ A visually interactive, web-based dashboard that models future subscriber growth
 
 ## 🚀 Live Demo
 
-👉 [Click here to view the live dashboard](https://github.com/yashwanthgowdanm/yt-subs-growth)  
+👉 [Click here to view the live dashboard](https://yashwanthgowdanm.github.io/yt-subs-growth/)  
 
 ---
 
